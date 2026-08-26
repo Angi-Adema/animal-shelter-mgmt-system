@@ -4,7 +4,7 @@
 # Initialize a list of accepted animal types.
 accepted_animal_types = ["dog", "cat"]
 
-# Create an empty list to store dictionaries of animal information.
+# Create an empty list to store animal objects.
 animal_list = []
 
 # Create a base class Animal with name, age, and species attributes.
@@ -142,7 +142,7 @@ while True:
         while True:
 
             # Prompt user to enter name of animal to remove from the animal_list and remove it if it exists, otherwise print a message indicating that the animal was not found.
-            name_to_remove = input("Enter the name of the animal to remove: ")
+            name_to_remove = input("Enter the name of the animal to remove: ").strip()
 
             # Validate the input
             if name_to_remove == "":
@@ -179,3 +179,9 @@ while True:
     # Display a message if the user enters an invalid selection.
     else:
         print("Invalid choice. Please try again.")
+
+# REFERENCES:
+#
+# 1. GeeksforGeeks. (2026, June 5). "Python Classes and Objects". 
+#    https://www.geeksforgeeks.org/python/python-classes-and-objects/
+# 2. 
