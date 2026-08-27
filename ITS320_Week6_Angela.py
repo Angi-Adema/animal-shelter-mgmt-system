@@ -10,18 +10,43 @@ animal_list = []
 # Create a base class Animal with name, age, and species attributes.
 class Animal():
     def __init__(self, name, age, species):
-        self.name = name
-        self.age = age
-        self.species = species
+        self.__name = name        # Private attribute
+        self.__age = age          # Private attribute
+        self._species = species   # Protected attribute
 
+    # Accessor method for name
+    def get_name(self):
+        return self.__name
+
+    # Mutator method for name
+    def set_name(self, name):
+        self.__name = name
+
+    # Accessor method for age
+    def get_age(self):
+        return self.__age
+
+    # Mutator method for age
+    def set_age(self, age):
+        self.__age = age
+
+    # Only a get method here since the species is set when the animal is created and should not be changed.
+    def get_species(self):
+        return self._species
+    
     # Create a method to display the animal's information.
     def display_info(self):
-        print(f"Name: {self.name}, Age: {self.age}, Species: {self.species}")
+        print(f"Name: {self.__name}, Age: {self.__age}, Species: {self._species}")
 
     # Create a method to update the animal's age.
     def update_age(self, new_age):
-        self.age = new_age
-        print(f"{self.name}'s age has been updated to {self.age}.")
+
+        # Conditional to ensure age is within the correct range.
+        if str(new_age).isdigit() and 0 <= int(new_age) < 20:
+            self.set_age(int(new_age))
+            print(f"{self.__name}'s age has been updated to {self.__age}.")
+        else:
+            print("Invalid age. Age must be a non-negative integer less than 20.")
 
 # Create a Dog class that inherits the Animal class.
 class Dog(Animal):
@@ -31,7 +56,7 @@ class Dog(Animal):
 
     # Declare a bark() method.
     def bark(self):
-        print(f"{self.name} says Woof!")
+        print(f"{self._Animal__name} says Woof!")
 
 # Create a Cat class that inherits the Animal class.
 class Cat(Animal):
@@ -41,7 +66,7 @@ class Cat(Animal):
 
     # Declare a meow() method.
     def meow(self):
-        print(f"{self.name} says Meow!")
+        print(f"{self._Animal__name} says Meow!")
 
 # Create a while True loop to display a menu enabling a user to add, delete, or display shelter animals.
 while True:
