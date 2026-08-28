@@ -253,7 +253,7 @@ while True:
             # Reprompt the user to enter the cat's color until a valid input is received.
             while True:
                 # Prompt the user to enter the cat's color removing any leading or trailing whitespace. 
-                color = input("Enter cat color: ")
+                color = input("\nEnter cat color: ").strip()
 
                 # Validate the input
                 if color == "":
