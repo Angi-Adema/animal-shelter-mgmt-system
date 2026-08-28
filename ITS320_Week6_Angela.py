@@ -1,14 +1,14 @@
 # Create an animal management system for a shelter demonstrating the pillars of OOP
 # through implementing different classes.
 
+# Import the ABC module to create an abstract base class.
+from abc import ABC, abstractmethod
+
 # Initialize a list of accepted animal types.
 accepted_animal_types = ["dog", "cat"]
 
-# Create an empty list to store animal objects.
-animal_list = []
-
-# Create a base class Animal with name, age, and species attributes.
-class Animal():
+# Create an abstract base class Animal encapsulating common attributes and behaviors.
+class Animal(ABC):
     def __init__(self, name, age, species):
         self.__name = name        # Private attribute
         self.__age = age          # Private attribute
@@ -28,7 +28,9 @@ class Animal():
 
     # Mutator method for age
     def set_age(self, age):
-        self.__age = age
+        # Validate user input to ensure age is a non-negative integer less than 20.
+        if 0 <= age <= 20:
+            self.__age = age
 
     # Only a get method here since the species is set when the animal is created and should not be changed.
     def get_species(self):
@@ -48,25 +50,131 @@ class Animal():
         else:
             print("Invalid age. Age must be a non-negative integer less than 20.")
 
+    # Require all subclasses to implement its own speak behavior.
+    @abstractmethod
+    def speak(self):
+        pass
+
 # Create a Dog class that inherits the Animal class.
 class Dog(Animal):
     def __init__(self, name, age, breed):
         super().__init__(name, age, "Dog")
-        self.breed = breed
+        self.__breed = breed
+
+    # Accessor method for breed
+    def get_breed(self):
+        return self.__breed
+
+    # Mutator method for breed
+    def set_breed(self, breed):
+        # Validate user input to ensure breed is not empty.
+        if breed.strip() != "":
+            self.__breed = breed
 
     # Declare a bark() method.
     def bark(self):
-        print(f"{self._Animal__name} says Woof!")
+        print(f"{self.get_name()} says Woof!")
+
+    # Override the speak() method to provide the dog's specific behavior.
+    def speak(self):
+        self.bark()
+
+    # Display the dog's information, including its breed.
+    def display_info(self):
+        super().display_info()
+        print(f"Breed: {self.__breed}")
 
 # Create a Cat class that inherits the Animal class.
 class Cat(Animal):
     def __init__(self, name, age, color):
         super().__init__(name, age, "Cat")
-        self.color = color
+        self.__color = color
+
+    # Accessor method for color
+    def get_color(self):
+        return self.__color
+
+    # Mutator method for color
+    def set_color(self, color):
+        # Validate user input to ensure color is not empty.
+        if color.strip() != "":
+            self.__color = color
 
     # Declare a meow() method.
     def meow(self):
-        print(f"{self._Animal__name} says Meow!")
+        print(f"{self.get_name()} says Meow!")
+
+    # Override the speak() method to provide the cat's specific behavior.
+    def speak(self):
+        self.meow()
+
+    # Display the cat's information, including its color.
+    def display_info(self):
+        super().display_info()
+        print(f"Color: {self.__color}")
+
+# Create an abstract AnimalShelter class with methods to add or remove animals from the shelter.
+class AnimalShelter(ABC):
+    # Define an abstract method to add an animal to the shelter.
+    @abstractmethod
+    def add_animal(self, animal):
+        pass
+
+    # Define an abstract method to remove an animal from the shelter.
+    @abstractmethod
+    def remove_animal(self, animal):
+        pass
+
+    # Define an abstract method to display all animals in the shelter.
+    @abstractmethod
+    def display_animals(self):
+        pass
+
+# Create a concrete Shelter class that inherits from the AnimalShelter class and implements the abstract methods.
+class Shelter(AnimalShelter):
+
+    # Implement the constructor to initialize the animal_list.
+    def __init__(self):
+        self.__animal_list = []
+
+    # Implement abstract method to add an animal to the shelter.
+    def add_animal(self, animal):
+        self.__animal_list.append(animal)
+        print(f"{animal.get_name()} has been added to the shelter.")
+
+    # Implement abstract method to remove an animal from the shelter.
+    def remove_animal(self, animal_name):
+
+        # Loop through the animal_list to find the animal to be removed. If found, remove it and print a confirmation message. If not found, print a message indicating that the animal was not found.
+        for animal in self.__animal_list:
+
+            # Confirm if the animal is found.
+            if animal.get_name().lower() == animal_name.lower():
+                # Remove the animal from the shelter and print a confirmation message.
+                self.__animal_list.remove(animal)
+                print(f"{animal.get_name()} has been removed from the shelter.")
+
+                return
+        # Otherwise display a message the animal is not in the shelter.
+        print(f"No animal with the name of {animal_name} is found in the shelter.")
+
+    # Implement abstract method to display all animals in the shelter.
+    def display_animals(self):
+
+        # Conditional to handle if there are no animals in the shelter.
+        if not self.__animal_list:
+            print("No animals in the shelter.")
+        else:
+            # Loop through the animal_list and display each animal's information.
+            for animal in self.__animal_list:
+                animal.display_info()
+
+                # Demonstrate polymorphism by calling the speak() method for each animal in the shelter.
+                animal.speak()
+                print()
+
+# Create a shelter variable to store the shelter object.
+shelter = Shelter()
 
 # Create a while True loop to display a menu enabling a user to add, delete, or display shelter animals.
 while True:
@@ -110,7 +218,7 @@ while True:
         # Reprompt the user to enter the animal's age until a valid input is received.
         while True:
             # Prompt the user to enter the animal's age removing any leading or trailing whitespace.
-            age = int(input("Enter animal age: ")).strip()
+            age = input("Enter animal age: ").strip()
 
             # Validate the input
             if age == "":
@@ -157,8 +265,7 @@ while True:
             new_animal = Cat(name, age, color)
 
         # Append new_animal to the animal_list and print a confirmation message.
-        animal_list.append(new_animal)
-        print(f"{new_animal.name} has been added to the shelter.")
+        shelter.add_animal(new_animal)
 
     # Process user selection of 2.
     elif selection == "2":
@@ -175,27 +282,14 @@ while True:
             else:
                 break
 
-            # Loop through the animal_list to find the animal name to be removed. Convert to lowercase to ensure case insensitivity.
-            for animal in animal_list:
-
-                # Logic to handle if the name is found.
-                if animal.name.lower() == name_to_remove.lower():
-                    animal_list.remove(animal)
-                    print(f"{animal.name} has been removed from the shelter.")
-                    break
-                else:
-                    print(f"No animal found with the name {name_to_remove}.")
+        # Call the remove_animal() method to remove the animal from the shelter.
+        shelter.remove_animal(name_to_remove)
 
     # Process user selection of 3.
     elif selection == "3":
 
-        # Display a message if the animal_list is empty.
-        if not animal_list:
-            print("No animals in the shelter.")
-        else:
-            # Loop through the animal_list and call the display_info() method for each animal.
-            for animal in animal_list:
-                animal.display_info()
+        # Call the display_animals() method to display all animals in the shelter.
+        shelter.display_animals()
 
     # Process user selection of 4.
     elif selection == "4":
@@ -209,4 +303,8 @@ while True:
 #
 # 1. GeeksforGeeks. (2026, June 5). "Python Classes and Objects". 
 #    https://www.geeksforgeeks.org/python/python-classes-and-objects/
-# 2. 
+# 2. GeeksforGeeks. (2025, September 3). "Abstract Classes in Python".
+#    https://www.geeksforgeeks.org/python/abstract-classes-in-python/
+# 3. GeeksforGeeks. (2026, June 5). "Polymorphism in Python".
+#    https://www.geeksforgeeks.org/python/polymorphism-in-python/
+# 4.
