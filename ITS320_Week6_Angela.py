@@ -156,14 +156,14 @@ class Shelter(AnimalShelter):
 
                 return
         # Otherwise display a message the animal is not in the shelter.
-        print(f"No animal with the name of {animal_name} is found in the shelter.")
+        print(f"\nNo animal with the name of {animal_name} is found in the shelter.")
 
     # Implement abstract method to display all animals in the shelter.
     def display_animals(self):
 
         # Conditional to handle if there are no animals in the shelter.
         if not self.__animal_list:
-            print("No animals in the shelter.")
+            print("\nNo animals in the shelter.")
         else:
             # Loop through the animal_list and display each animal's information.
             for animal in self.__animal_list:
@@ -293,11 +293,11 @@ while True:
 
     # Process user selection of 4.
     elif selection == "4":
-        print("Exiting the Animal Shelter Management System. Goodbye!")
+        print("\nExiting the Animal Shelter Management System. Goodbye!")
         break
     # Display a message if the user enters an invalid selection.
     else:
-        print("Invalid choice. Please try again.")
+        print("\nInvalid choice. Please try again.")
 
 # REFERENCES:
 #
