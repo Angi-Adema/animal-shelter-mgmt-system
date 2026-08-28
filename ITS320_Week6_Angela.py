@@ -48,7 +48,7 @@ class Animal(ABC):
             self.set_age(int(new_age))
             print(f"{self.__name}'s age has been updated to {self.__age}.")
         else:
-            print("Invalid age. Age must be a non-negative integer less than 20.")
+            print("Invalid age. Age must be a non-negative integer 20 or less.")
 
     # Require all subclasses to implement its own speak behavior.
     @abstractmethod
@@ -207,7 +207,7 @@ while True:
         # Reprompt the user to enter the animal's name until a valid input is received.
         while True:
             # Prompt the user to enter the animal's name.
-            name = input("\nEnter animal name: ")
+            name = input("\nEnter animal name: ").strip()
 
             # Validate the input
             if name == "":
