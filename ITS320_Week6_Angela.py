@@ -44,7 +44,7 @@ class Animal(ABC):
     def update_age(self, new_age):
 
         # Conditional to ensure age is within the correct range.
-        if str(new_age).isdigit() and 0 <= int(new_age) < 20:
+        if str(new_age).isdigit() and 0 <= int(new_age) <= 20:
             self.set_age(int(new_age))
             print(f"{self.__name}'s age has been updated to {self.__age}.")
         else:
@@ -186,7 +186,7 @@ while True:
     print("4. Exit")
 
     # Store the user's selection
-    selection = input("Enter your choice (1-4): ")
+    selection = input("\nEnter your choice (1-4): ")
 
     # Process user selection of 1.
     if selection == "1":
@@ -194,20 +194,20 @@ while True:
         # Reprompt the user to enter the animal's type until a valid input is received.
         while True:
             # Prompt the user to enter the animal's type.
-            animal_type = input("Enter animal type (Dog/Cat): ").strip().lower()
+            animal_type = input("\nEnter animal type (Dog/Cat): ").strip().lower()
 
             # Validate the input
             if animal_type == "":
-                print("Animal type cannot be empty. Please enter 'Dog' or 'Cat'.")
+                print("\nAnimal type cannot be empty. Please enter 'Dog' or 'Cat'.")
             elif animal_type not in accepted_animal_types:
-                print("Invalid animal type. Please enter 'Dog' or 'Cat'.")
+                print("\nInvalid animal type. Please enter 'Dog' or 'Cat'.")
             else:
                 break
 
         # Reprompt the user to enter the animal's name until a valid input is received.
         while True:
             # Prompt the user to enter the animal's name.
-            name = input("Enter animal name: ")
+            name = input("\nEnter animal name: ")
 
             # Validate the input
             if name == "":
@@ -218,7 +218,7 @@ while True:
         # Reprompt the user to enter the animal's age until a valid input is received.
         while True:
             # Prompt the user to enter the animal's age removing any leading or trailing whitespace.
-            age = input("Enter animal age: ").strip()
+            age = input("\nEnter animal age: ").strip()
 
             # Validate the input
             if age == "":
