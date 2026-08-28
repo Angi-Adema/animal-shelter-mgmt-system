@@ -140,7 +140,7 @@ class Shelter(AnimalShelter):
     # Implement abstract method to add an animal to the shelter.
     def add_animal(self, animal):
         self.__animal_list.append(animal)
-        print(f"{animal.get_name()} has been added to the shelter.")
+        print(f"\n{animal.get_name()} has been added to the shelter.")
 
     # Implement abstract method to remove an animal from the shelter.
     def remove_animal(self, animal_name):
@@ -152,7 +152,7 @@ class Shelter(AnimalShelter):
             if animal.get_name().lower() == animal_name.lower():
                 # Remove the animal from the shelter and print a confirmation message.
                 self.__animal_list.remove(animal)
-                print(f"{animal.get_name()} has been removed from the shelter.")
+                print(f"\n{animal.get_name()} has been removed from the shelter.")
 
                 return
         # Otherwise display a message the animal is not in the shelter.
@@ -198,9 +198,9 @@ while True:
 
             # Validate the input
             if animal_type == "":
-                print("\nAnimal type cannot be empty. Please enter 'Dog' or 'Cat'.")
+                print("Animal type cannot be empty. Please enter 'Dog' or 'Cat'.")
             elif animal_type not in accepted_animal_types:
-                print("\nInvalid animal type. Please enter 'Dog' or 'Cat'.")
+                print("Invalid animal type. Please enter 'Dog' or 'Cat'.")
             else:
                 break
 
@@ -237,7 +237,7 @@ while True:
             # Reprompt the user to enter the dog's breed until a valid input is received.
             while True:
                 # Prompt the user to enter the dog's breed removing any leading or trailing whitespace.
-                breed = input("Enter dog breed: ").strip()
+                breed = input("\nEnter dog breed: ").strip()
 
                 # Validate the input
                 if breed == "":
@@ -274,7 +274,7 @@ while True:
         while True:
 
             # Prompt user to enter name of animal to remove from the animal_list and remove it if it exists, otherwise print a message indicating that the animal was not found.
-            name_to_remove = input("Enter the name of the animal to remove: ").strip()
+            name_to_remove = input("\nEnter the name of the animal to remove: ").strip()
 
             # Validate the input
             if name_to_remove == "":
